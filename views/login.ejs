@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+
+  <div class="starter-template">
+    <h1>Entrar</h1>
+    <form class="form-signin" method="POST">
+      <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">Faça o login de acesso</h1>
+      <label for="inputUsername" class="sr-only">Usuário</label>
+      <input name="username" type="text" id="inputUsername" class="form-control" placeholder="Inform o usuário" required autofocus>
+      <label for="inputPassword" class="sr-only">Senha</label>
+      <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Inform sua senha" required>
+      
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+    </form>
+  </div>
+
+<%- include('partials/footer') %>
