@@ -8,6 +8,8 @@ const mongoose = require('mongoose');
 const User = require('./models/user');
 const newsRoute = require('./routes/news.routes');
 const restrictRoute = require('./routes/restrict.routes');
+const authRouter = require('./routes/auth.routes');
+const pagesRouter = require('./routes/pages.routes');
 
 mongoose.Promise = global.Promise;
 dotenv.config();
@@ -23,6 +25,13 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(session({ secret: 'jeandson-fullstack' }));
 
+app.use((req, res, next) => {
+  if('user' in req.session) {
+    res.locals.user = req.session.user;
+  }
+  next();
+});
+
 app.use('/restrict', (req, res, next) => {
   if('user' in req.session) {
     return next();
@@ -30,24 +39,10 @@ app.use('/restrict', (req, res, next) => {
   res.redirect('/login');
 })
 
+app.use('/', pagesRouter);
+app.use('/', authRouter);
 app.use('/news', newsRoute);
 app.use('/restrict', restrictRoute);
-
-app.get('/login', (req, res) => {res.render('login')});
-
-app.post('/login', async (req, res) => {
-  const user = await User.findOne({ username: req.body.username });
-  const isValid = await user.checkPassword(req.body.password);
-  
-  if(isValid) { 
-    req.session.user = user;
-    res.redirect('/restrict/news');
-  } else {
-    res.redirect('/login');
-  }
-})
-
-app.get('/', (req, res) => {res.render('index')});
 
 //Verifica se tem um usuário inicial no banco de dados se não tiver cria ele.
 const createInitialUser = async () => {
