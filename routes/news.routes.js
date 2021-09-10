@@ -1,10 +1,17 @@
 const { Router } = require('express');
 
 const newsRoute = Router();
-const NewsFree = require('../models/news');
+const News = require('../models/news');
 
-newsRoute.get('/', (req, res) => {
-  res.send('notícias públicas');
+newsRoute.get('/', async (req, res) => {
+  // let conditions = {};
+
+  // if(!('user' in req.session)) {
+  //   conditions = { category: 'public' };
+  // }
+  const conditions = { category: 'public' };
+  const news = await News.find(conditions);
+  res.render('news/index', { news });
 });
 
 module.exports = newsRoute;

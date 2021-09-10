@@ -1,12 +1,14 @@
 const {Router} = require('express');
 const restrictRouter = Router();
+const News = require('../models/news');
 
 restrictRouter.get('/', (req, res) => {
   res.send('restrict page');
 })
 
-restrictRouter.get('/news', (req, res) => {
-  res.send('noticias restritas')
+restrictRouter.get('/news', async (req, res) => {
+  const news = await News.find({ category: 'private' });
+  res.render('news/restrict', { news });
 })
 
 module.exports = restrictRouter;

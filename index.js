@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 
 const User = require('./models/user');
+const News = require('./models/news');
 const newsRoute = require('./routes/news.routes');
 const restrictRoute = require('./routes/restrict.routes');
 const authRouter = require('./routes/auth.routes');
@@ -57,6 +58,14 @@ const createInitialUser = async () => {
   } else {
     console.log('user created skipped');
   }
+
+  // const news = new News({
+  //   title: 'Notícia pública '+new Date().getTime(),
+  //   content: 'content',
+  //   category: 'public'
+  // });
+
+  // await news.save();
 
 }
 
