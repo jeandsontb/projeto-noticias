@@ -26,22 +26,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(session({ secret: 'jeandson-fullstack' }));
 
-app.use((req, res, next) => {
-  if('user' in req.session) {
-    res.locals.user = req.session.user;
-  }
-  next();
-});
-
-app.use('/restrict', (req, res, next) => {
-  if('user' in req.session) {
-    return next();
-  }
-  res.redirect('/login');
-})
-
-app.use('/', pagesRouter);
 app.use('/', authRouter);
+app.use('/', pagesRouter);
 app.use('/news', newsRoute);
 app.use('/restrict', restrictRoute);
 

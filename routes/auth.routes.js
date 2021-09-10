@@ -3,7 +3,20 @@ const authRouter = Router();
 
 const User = require('../models/user');
 
+authRouter.use((req, res, next) => {
+  if('user' in req.session) {
+    res.locals.user = req.session.user;
+  }
+  next();
+});
+
 authRouter.get('/login', (req, res) => {res.render('login')});
+
+authRouter.get('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/');
+  });  
+});
 
 authRouter.post('/login', async (req, res) => {
   const user = await User.findOne({ username: req.body.username });

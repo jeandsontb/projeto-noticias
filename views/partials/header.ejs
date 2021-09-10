@@ -19,7 +19,7 @@
   <body>
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#">Notícias</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -37,7 +37,10 @@
           </li>
           <% if('user' in locals) { %>
           <li class="nav-item dropdown">
-            <a class="nav-link" href="/" ><%= locals.user.username %></a>
+            <p class="nav-link" >Olá <%= locals.user.username %></p>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Sair</a>
           </li>
           <% } else { %>
           <li class="nav-item">
