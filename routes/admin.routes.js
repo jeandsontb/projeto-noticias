@@ -3,8 +3,8 @@ const adminRouter = Router();
 const News = require('../models/news');
 
 adminRouter.use((req, res, next) => {
-  if('user' in req.session) {
-    if(req.session.user.roles.indexOf('admin') >= 0) {
+  if(req.isAuthenticated) {
+    if(req.user.roles.indexOf('admin') >= 0) {
       return next();
     } else {
       res.redirect('/');
