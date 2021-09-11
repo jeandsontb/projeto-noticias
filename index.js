@@ -11,6 +11,7 @@ const newsRoute = require('./routes/news.routes');
 const restrictRoute = require('./routes/restrict.routes');
 const authRouter = require('./routes/auth.routes');
 const pagesRouter = require('./routes/pages.routes');
+const adminRouter = require('./routes/admin.routes');
 
 mongoose.Promise = global.Promise;
 dotenv.config();
@@ -30,20 +31,29 @@ app.use('/', authRouter);
 app.use('/', pagesRouter);
 app.use('/news', newsRoute);
 app.use('/restrict', restrictRoute);
+app.use('/admin', adminRouter);
 
 //Verifica se tem um usuário inicial no banco de dados se não tiver cria ele.
 const createInitialUser = async () => {
-  const total = await User.countDocuments({username: 'jeandson'});
-  if(total === 0 ) {
-    const user = new User({
-      username: 'jeandson', //cria um usuário jeandson 
-      password: '123456' // adiciona essa senha para esse usuário padrão
-    });
-    await user.save();
-    console.log('user created');
-  } else {
-    console.log('user created skipped');
-  }
+  // const total = await User.countDocuments({username: 'jeandson'});
+  // if(total === 0 ) {
+  //   const user = new User({
+  //     username: 'user1', //cria um usuário jeandson 
+  //     password: '123456', // adiciona essa senha para esse usuário padrão
+  //     roles: ['restrict', 'admin']
+  //   });
+  //   await user.save();
+
+  //   const user2 = new User({
+  //     username: 'user2', //cria um usuário jeandson 
+  //     password: '123456', // adiciona essa senha para esse usuário padrão
+  //     roles: ['restrict']
+  //   });
+  //   await user2.save();
+  //   console.log('user created');
+  // } else {
+  //   console.log('user created skipped');
+  // }
 
   // const news = new News({
   //   title: 'Notícia pública '+new Date().getTime(),

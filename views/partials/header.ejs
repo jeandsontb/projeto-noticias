@@ -31,21 +31,33 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/news">Notícias</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/restrict/news">Notícias Restritas</a>
-          </li>
+          </li>          
           <% if('user' in locals) { %>
-          <li class="nav-item dropdown">
-            <p class="nav-link" >Olá <%= locals.user.username %></p>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout">Sair</a>
-          </li>
-          <% } else { %>
-          <li class="nav-item">
-            <a class="nav-link" href="/login">Entrar</a>
-          </li>
+            <% if(locals.role === 'restrict') { %>
+              <li class="nav-item">
+                <a class="nav-link" href="/restrict/news">Notícias Restritas</a>
+              </li>
+            <% } %>
+            <% if(locals.role === 'admin') { %>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/news">Notícias Administrativas</a>
+              </li>
+            <% } %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-expanded="false"><%= locals.user.username %></a>
+              <div class="dropdown-menu" aria-labelledby="dropdown01">
+                <% if( locals.user.roles.length > 1 ) { %>
+                <% locals.user.roles.forEach(role => { %>
+                  <a class="dropdown-item" href="/change-role/<%= role  %>"><%= role %></a>
+                <% }) %>
+                <% } %>
+                <a class="dropdown-item" href="/logout">Sair</a>
+              </div>
+            </li>
+            <% } else { %>            
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Entrar</a>
+            </li>
           <% } %>
         </ul>
         <form class="form-inline my-2 my-lg-0">
