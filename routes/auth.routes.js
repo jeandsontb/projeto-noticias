@@ -3,6 +3,7 @@ const authRouter = Router();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const dotEnv = require('dotenv');
 
 dotEnv.config();
@@ -54,6 +55,26 @@ passport.use(new FacebookStrategy({
   } else {
     done(null, userDB);
   }
+}));
+
+//Estratégia para login google
+passport.use(new GoogleStrategy({
+  clientID: process.env.ID_GOOGLE,
+  clientSecret: process.env.SECRET_GOOGLE,
+  callbackURL:'http://localhost:3333/google/callback'
+}, async (accessToken, refreshToken, err, profile, done) => {
+  const userDB = await User.findOne({ googleId: profile.id })
+  if(!userDB) {
+    const user = new User({
+      name: profile.displayName,
+      googleId: profile.id,
+      roles: ['restrict']
+    });
+    await user.save();
+    done(null, user);
+  } else {
+    done(null, userDB);
+  }
 }))
 
 authRouter.use((req, res, next) => {
@@ -97,6 +118,12 @@ authRouter.get(
   (req, res) => {
     res.redirect('/');
   }
+)
+
+authRouter.get('/google', passport.authenticate('google',{scope: ['https://www.googleapis.com/auth/userinfo.profile'] }));
+authRouter.get(
+  '/google/callback', 
+  passport.authenticate('google', {failureRedirect: '/', successRedirect: '/'})
 )
 
 module.exports = authRouter;
