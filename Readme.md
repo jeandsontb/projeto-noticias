@@ -17,9 +17,9 @@ Projeto simples de implementação de controle de acesso em Node.js usando JWT T
 ### Interface Web
 
 <p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
-  <img alt="PASSPORT" title="#PASSPORT" src="" width="400px">
+  <img alt="PASSPORT" title="#PASSPORT" src="https://raw.githubusercontent.com/jeandsontb/projeto-noticias/main/Screen/news1.png" width="400px">
 
-  <img alt="PASSPORT" title="#PASSPORT" src="" width="400px">
+  <img alt="PASSPORT" title="#PASSPORT" src="https://raw.githubusercontent.com/jeandsontb/projeto-noticias/main/Screen/news2.png" width="400px">
 </p>
 
 ## 🛠 Tecnologias
